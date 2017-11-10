@@ -1,69 +1,75 @@
 import java.awt.Point;
 import java.util.Random;
 
+// This class is responsible for generate a grid representing the island map
+// and randomly placing islands onto the grid.
 public class OceanMap {
-	
-	int[][] blueOcean;
-	int mapSize;
+	boolean[][] islands;
+	int dimensions;
+	int islandCount;
+	Random rand = new Random();
 	Point shipLocation;
-	Random random = new Random();
 	
 	
-	public OceanMap(int islands, int size) {
-		mapSize = size;
-	//	shipLocation = new Point();
-		initialize();
-		addIslands(islands);
-		Point temp = new Point(random.nextInt(10),random.nextInt(10));
-		if (isOcean(temp.x, temp.y) ) {
-			shipLocation = temp;
-			updateOcean(shipLocation.x,shipLocation.y, 2);	
-		}
-		
+	// Constructor
+	// Not adding validation code so make sure islandCount is much less than dimension^2
+	public OceanMap(int dimensions, int islandCount){
+		this.dimensions = dimensions;
+		this.islandCount = islandCount;
+		createGrid();
+		placeIslands();
+		shipLocation = placeShip();
 	}
 	
-	public int[][] getMap(){
-		return blueOcean;
+	// Create an empty map
+	private void createGrid(){
+		 islands = new boolean[dimensions][dimensions];
+		 for(int x = 0; x < dimensions; x++)
+			 for(int y = 0; y < dimensions; y++)
+				 islands[x][y] = false;
 	}
 	
-	public Point getShipLocation() {
-		return shipLocation;
-	}
-	
-	public void initialize() {
-		
-		blueOcean = new int[mapSize][mapSize];
-		//set map to 0 for ocean	
-		for (int i=0; i < mapSize; i++) {
-			for(int j=0; j < mapSize; j++) {
-				blueOcean[i][j] = 0;
+	// Place islands onto map
+	private void placeIslands(){
+		int islandsToPlace = islandCount;
+		while(islandsToPlace >0){
+			int x = rand.nextInt(dimensions);
+			int y = rand.nextInt(dimensions);
+			if(islands[x][y] == false){
+				islands[x][y] = true;
+				islandsToPlace--;
 			}
 		}
 	}
 	
-	public void addIslands(int n) {
-		
-		while (n > 0) {
-			
-			Random randomX = new Random();
-			Random randomY = new Random();
-			int x = randomX.nextInt(10);
-			int y = randomY.nextInt(10);
-			
-			//if the random coordinate is ocean, place an island
-			if (blueOcean[x][y] == 0) {
-				blueOcean[x][y] = 1;
-				n--;
-			}		
-		}	
+	private Point placeShip(){
+		boolean placedShip = false;
+		int x=0,y=0;
+		while(!placedShip){
+			x = rand.nextInt(dimensions);
+			y = rand.nextInt(dimensions);
+			if(islands[x][y] == false){
+				placedShip = true;
+			}
+		}
+		return new Point(x,y);
+	}
+
+	public Point getShipLocation(){
+		return shipLocation;
 	}
 	
-	public void updateOcean(int x, int y, int val) {
-		blueOcean[x][y] = val;	
+	// Return generated map
+	public boolean[][] getMap(){
+		return islands;
 	}
 	
-	public boolean isOcean(int x, int y) {
-		if (blueOcean[x][y] == 0) 
+	public int getDimensions(){
+		return dimensions;
+	}
+	
+	public boolean isOcean(int x, int y){
+		if (!islands[x][y])
 			return true;
 		else
 			return false;

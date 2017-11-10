@@ -1,104 +1,80 @@
 import java.awt.Point;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
-public class Pirate implements Observer {
-	Point shipPosition;
-	Point piratePosition;
-	OceanMap oceanMap;
-	Random random = new Random();
-	
-	public Pirate(OceanMap map) {
-		oceanMap = map;
-		Point temp = new Point(random.nextInt(10),random.nextInt(10));
-		if (oceanMap.isOcean(temp.x, temp.y))
-			piratePosition = temp;
-			oceanMap.updateOcean(temp.x, temp.y, 2);
-	}
-	
-	public void update(Ship ship) {
-		
-		if (ship instanceof Ship) {
-			shipPosition = ((Ship)ship).getShipLocation();
-			movePirate();	
-		}	
-	}
-	
-	public Point getShipLocation() {
-		return piratePosition;
-	}
-	
-	public void movePirate() {
-		
-		int x = shipPosition.x;
-		int y = shipPosition.y;
-		
-		oceanMap.updateOcean(x, y, 0);
-		
-		if (shipPosition != piratePosition) {
-			
-			
-			if (shipPosition.x < piratePosition.x && shipPosition.y < piratePosition.y) { //ship is northwest
-				if (piratePosition.x - 1 > 0 &&
-					piratePosition.y - 1 > 0 &&
-					oceanMap.isOcean(piratePosition.x - 1, piratePosition.y - 1)) {
-						piratePosition.x--;
-						piratePosition.y--;
-				}
-			}
-			if (shipPosition.x == piratePosition.x && shipPosition.y < piratePosition.y) { //ship is north
-				if (oceanMap.isOcean(piratePosition.x, piratePosition.y - 1)) {
-							piratePosition.y--;
-				}
-				
-			}
-			if (shipPosition.x > piratePosition.x && shipPosition.y < piratePosition.y) { //ship is northeast
-				if (piratePosition.x + 1 < 10 &&
-					piratePosition.y - 1 > 0 &&
-					oceanMap.isOcean(piratePosition.x + 1, piratePosition.y - 1)) {
-						piratePosition.x++;
-						piratePosition.y--;
-				}
-			}
-			
-			
-			if (shipPosition.x < piratePosition.x && shipPosition.y == piratePosition.y) { //ship is west
-				if (oceanMap.isOcean(piratePosition.x - 1, piratePosition.y)) {
-					piratePosition.x--;
-				}
-			}
-			if (shipPosition.x > piratePosition.x && shipPosition.y == piratePosition.y) { //ship is east
-				if (oceanMap.isOcean(piratePosition.x + 1, piratePosition.y)) {
-					piratePosition.x++;
-				}
-			}
-			
-			
-			if (shipPosition.x < piratePosition.x && shipPosition.y > piratePosition.y) { //ship is south west
-				if (piratePosition.x - 1 > 0 &&
-					piratePosition.y + 1 < 10 &&
-					oceanMap.isOcean(piratePosition.x - 1, piratePosition.y + 1)) {
-						piratePosition.x--;
-						piratePosition.y++;
-				}
-			}
-			if (shipPosition.x == piratePosition.x && shipPosition.y > piratePosition.y) { //ship is south
-				if (oceanMap.isOcean(piratePosition.x, piratePosition.y + 1)) {
-					piratePosition.y++;
-			}
-			}
-			if (shipPosition.x > piratePosition.x && shipPosition.y > piratePosition.y) {	//ship is south east
-				if (piratePosition.x + 1 < 10 &&
-					piratePosition.y + 1 < 10 &&
-					oceanMap.isOcean(piratePosition.x + 1, piratePosition.y + 1)) {
-						piratePosition.x++;
-						piratePosition.y++;
-				}
-			}
-				
+public class Pirate implements Observer{
+
+	Point pirateLocation;
+	Point shipLocation;
+    OceanMap oceanMap;
+    Random rand = new Random();
+    int x = 0;
+    
+    public Pirate(OceanMap oceanMap){    	
+    	this.oceanMap = oceanMap;
+    	while(x != -1)
+    	{
+    		pirateLocation= new Point(rand.nextInt(10),rand.nextInt(10));
+    		if(oceanMap.islands[(int) pirateLocation.getX()][(int) pirateLocation.getY()])
+    		{
+    			x = 0;
+    		}
+    		else x = x -1;
+    	}
+    }
+    
+    public Point getShipLocation(){
+    	return pirateLocation;
+    }
+    
+    public void goEast(){
+    	if(pirateLocation.x<oceanMap.getDimensions()-1 && oceanMap.isOcean(pirateLocation.x+1, pirateLocation.y)){
+    		pirateLocation.x++;
+    	} 
+    }
+    
+    public void goWest(){
+    	if(pirateLocation.x >0 && oceanMap.isOcean(pirateLocation.x-1, pirateLocation.y)){
+    		pirateLocation.x--;
+    	}  
+    	
+    }
+    
+    public void goNorth(){
+    	if(pirateLocation.y>0 && oceanMap.isOcean(pirateLocation.x, pirateLocation.y-1)){
+    		pirateLocation.y--;
+    	}  
+    	
+    }
+    
+    public void goSouth(){
+    	if(pirateLocation.y<oceanMap.getDimensions()-1 && oceanMap.isOcean(pirateLocation.x, pirateLocation.y+1)){
+    		pirateLocation.y++;
+    		
+    	}  	
+    }
+    
+    public void movePirate() {
+    	if(pirateLocation.x - shipLocation.x < 0)
+    		goEast();
+    	else 
+    		goWest(); 
+    	
+    	if(pirateLocation.y - shipLocation.y < 0)
+    		goSouth();
+    	else
+    		goNorth();
+    	
+    } 
+    
+    @Override
+	public void update(Observable ship, Object obj) {
+		if(ship instanceof Ship) {
+			shipLocation = ((Ship)ship).getShipLocation();
+			movePirate();
 		}
-		
-		
-		
-	}
-	
+    }
 }
+
+
