@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class OceanExplorer extends Application{
 
-	final int dimension = 10;
+	final int dimension = 20;
 	final int scale = 50;
 	int[][] loadedOcean;
 	OceanMap oceanGrid;
@@ -25,7 +25,7 @@ public class OceanExplorer extends Application{
 	public void start(Stage oceanStage) throws Exception {
 		
 		//generate the ocean grid
-		oceanGrid = new OceanMap(20,10);
+		oceanGrid = new OceanMap(10,20);
 		loadedOcean = oceanGrid.getMap();
 		
 		root = new AnchorPane();
@@ -40,7 +40,7 @@ public class OceanExplorer extends Application{
 		loadShipImage();
 			
 		//setup
-		scene = new Scene(root,500,500);
+		scene = new Scene(root,1000,1000);
 		oceanStage.setScene(scene);
 		oceanStage.setTitle("Columbus Game");
 		oceanStage.show();
