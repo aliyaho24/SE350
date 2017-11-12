@@ -32,24 +32,9 @@ public class OceanExplorer extends Application{
 		root = new AnchorPane();
 		drawMap();
 		
-		PirateFactory factory = new PirateFactory(oceanMap);
-		Pirate pirate = factory.createPirate();
-		Pirate pirate2 = factory.createPirate();
-		Pirate pirate3 = factory.createPirate();
 		ship = new Ship(oceanMap);
-		ship.addObserver(pirate);
-		ship.addObserver(pirate2);
-		ship.addObserver(pirate3);
+		spawnPirates(6);
 		loadShipImage();
-		pirate.addToPane(root);
-		pirate2.addToPane(root);
-		pirate3.addToPane(root);
-		
-		SailStrategy snake = new VerticalSail();
-		pirate.setSailStrategy(snake);
-		pirate.start();
-		pirate2.start();
-		pirate3.start();
 			
 		scene = new Scene(root,1000,1000);
 		mapStage.setScene(scene);
@@ -73,6 +58,20 @@ public class OceanExplorer extends Application{
 		}
 	}
 
+	public void spawnPirates(int n) {
+		SailStrategy snake = new SnakeSail();
+		//pirate.setSailStrategy(snake);
+		PirateFactory factory = new PirateFactory(oceanMap);
+		while(n>0) {
+			Pirate pirate = factory.createPirate();
+			ship.addObserver(pirate);
+			pirate.addToPane(root);
+			pirate.setSailStrategy(snake);
+			pirate.start();
+			n--;
+		}
+	}
+	
 	private void loadShipImage(){	
 		Image shipImage = new Image("ship.png",50,50, true, true);
 		shipImageView = new ImageView(shipImage);
