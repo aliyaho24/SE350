@@ -1,6 +1,7 @@
 # SE350
 
-11/11 *UPDATE*
+11/11 UPDATE
+
 My latest code is working and posted. 
 The strategy design is present and the display works for the Vertical and Snake sail although the movement needs some work. The chaseSail(observable) displays but doesn't move towards the cc ship. 
 The factory design is implemented with the PirateFactory.
