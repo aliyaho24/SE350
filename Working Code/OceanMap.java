@@ -1,19 +1,14 @@
 import java.awt.Point;
 import java.util.Random;
 
-// This class is responsible for generate a grid representing the island map
-// and randomly placing islands onto the grid.
 public class OceanMap {
+	
 	boolean[][] islands;
-	int dimensions;
-	int islandCount;
-	Random rand = new Random();
+	int dimensions, islandCount;
 	Point shipLocation;
+	Random rand = new Random();
 	
-	
-	// Constructor
-	// Not adding validation code so make sure islandCount is much less than dimension^2
-	public OceanMap(int dimensions, int islandCount){
+	public OceanMap(int dimensions, int islandCount) {
 		this.dimensions = dimensions;
 		this.islandCount = islandCount;
 		createGrid();
@@ -23,10 +18,10 @@ public class OceanMap {
 	
 	// Create an empty map
 	private void createGrid(){
-		 islands = new boolean[dimensions][dimensions];
-		 for(int x = 0; x < dimensions; x++)
-			 for(int y = 0; y < dimensions; y++)
-				 islands[x][y] = false;
+		islands = new boolean[dimensions][dimensions];
+		for(int x = 0; x < dimensions; x++)
+			for(int y = 0; y < dimensions; y++)
+				islands[x][y] = false;
 	}
 	
 	// Place islands onto map
@@ -54,22 +49,22 @@ public class OceanMap {
 		}
 		return new Point(x,y);
 	}
-
-	public Point getShipLocation(){
+		
+	public Point getShipLocation() {
 		return shipLocation;
 	}
 	
-	// Return generated map
+	//return generated map
 	public boolean[][] getMap(){
 		return islands;
 	}
 	
-	public int getDimensions(){
+	public int getDimensions() {
 		return dimensions;
 	}
 	
-	public boolean isOcean(int x, int y){
-		if (!islands[x][y])
+	public boolean isOcean(int x, int y) {
+		if (!islands[x][y]) 
 			return true;
 		else
 			return false;
