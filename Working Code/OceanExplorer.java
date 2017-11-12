@@ -34,13 +34,22 @@ public class OceanExplorer extends Application{
 		
 		PirateFactory factory = new PirateFactory(oceanMap);
 		Pirate pirate = factory.createPirate();
+		Pirate pirate2 = factory.createPirate();
+		Pirate pirate3 = factory.createPirate();
 		ship = new Ship(oceanMap);
 		ship.addObserver(pirate);
+		ship.addObserver(pirate2);
+		ship.addObserver(pirate3);
 		loadShipImage();
 		pirate.addToPane(root);
-		SailStrategy snake = new SnakeSail();
+		pirate2.addToPane(root);
+		pirate3.addToPane(root);
+		
+		SailStrategy snake = new VerticalSail();
 		pirate.setSailStrategy(snake);
 		pirate.start();
+		pirate2.start();
+		pirate3.start();
 			
 		scene = new Scene(root,1000,1000);
 		mapStage.setScene(scene);
