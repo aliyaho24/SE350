@@ -1,20 +1,17 @@
 
 public class SnakeSail implements SailStrategy{
 	
-	boolean back = false;
+	int count = 0;
 	
 	public void sail(Pirate pirate) {
 		
-		System.out.println(pirate.pirateLocation);
-		if (back) {
-			pirate.pirateLocation.x--;
-			back = false;
+		//modulo of count to allow back and forth movement
+		if (count%6 <= 2 && pirate.map.isOcean(pirate.pirateLocation.x -1, pirate.pirateLocation.y)) {
+			pirate.pirateLocation.x--;	
 		}
-		else {
-			pirate.pirateLocation.x++;
-			back = true;
-		}	
-		
-	}
-
+		else if (count%6 >= 3 && pirate.map.isOcean(pirate.pirateLocation.x + 1, pirate.pirateLocation.y)){
+				pirate.pirateLocation.x++;
+			}
+		count++;
+	}	
 }
