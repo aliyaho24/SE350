@@ -14,7 +14,6 @@ public class Ship extends Observable {
 	public Point getShipLocation() {
 		return currentLocation;
 	}
-	
 	 
 	public void goEast(){
 	    	if(currentLocation.x<oceanMap.getDimensions()-1 && 

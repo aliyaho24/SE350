@@ -14,7 +14,7 @@ public class OceanExplorer extends Application{
 	boolean[][] islandMap;
 	AnchorPane root;
 	final int dimensions = 20;
-	final int islandCount = 10;
+	final int islandCount = 60;
 	final int scalingFactor = 50;
 	OceanMap oceanMap;
 	Image shipImage;
@@ -33,7 +33,17 @@ public class OceanExplorer extends Application{
 		drawMap();
 		
 		ship = new Ship(oceanMap);
-		spawnPirates(6);
+
+		//spawning a ship doing vertical and horizontal sail just for test purposes 
+		//so you guys can see it work :)
+		PirateFactory factory = new PirateFactory(oceanMap);
+		Pirate pirate = factory.createPirate();
+		ship.addObserver(pirate);
+		pirate.addToPane(root);
+		SailStrategy vertical = new VerticalSail();
+		pirate.setSailStrategy(vertical);
+		pirate.start();
+		spawnPirates(1);
 		loadShipImage();
 			
 		scene = new Scene(root,1000,1000);
@@ -59,13 +69,13 @@ public class OceanExplorer extends Application{
 	}
 
 	public void spawnPirates(int n) {
-		SailStrategy snake = new SnakeSail();
-		//pirate.setSailStrategy(snake);
+		
 		PirateFactory factory = new PirateFactory(oceanMap);
 		while(n>0) {
 			Pirate pirate = factory.createPirate();
 			ship.addObserver(pirate);
 			pirate.addToPane(root);
+			SailStrategy snake = new SnakeSail(); 
 			pirate.setSailStrategy(snake);
 			pirate.start();
 			n--;

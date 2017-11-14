@@ -13,6 +13,7 @@ public class Pirate implements Observer, Runnable {
 	SailStrategy sailStrategy;
 	OceanMap map;
 	Random rand = new Random();
+	Random randomSpeed = new Random();
 	int x = 0;
 	protected Thread pirateThread;
 	Boolean done = false;
@@ -22,9 +23,10 @@ public class Pirate implements Observer, Runnable {
 	public Pirate(OceanMap oceanMap) {
 		
 		this.map = oceanMap;
-		this.sailStrategy = new VerticalSail();		//default sail strategy
+		this.shipLocation = map.shipLocation;
+		this.sailStrategy = new SnakeSail();		//default sail strategy
 		while(x != -1) {
-    			pirateLocation= new Point(rand.nextInt(10),rand.nextInt(10));
+    			pirateLocation= new Point(rand.nextInt(map.dimensions),rand.nextInt(map.dimensions));
     			if(oceanMap.islands[(int) pirateLocation.getX()][(int) pirateLocation.getY()]) {
     				x = 0;
     			}
@@ -48,14 +50,16 @@ public class Pirate implements Observer, Runnable {
 	
 	@Override
 	public void run() {
-	
-		while(!done) {
-			sailStrategy.sail(this);
-			draw();
+		//if it is not the observer sail then it runs this
+		if (!(this.sailStrategy instanceof ChaseSail)) {
+			while(!done) {
+				sailStrategy.sail(this);
+				draw();
 			try {
-				Thread.sleep(400);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				}	
 			}	
 		}
 	}
@@ -65,12 +69,11 @@ public class Pirate implements Observer, Runnable {
 	}
 	
 	public void draw(){
-		
 		//method to redraw the pirate as it moves
 		int x = this.pirateLocation.x;
 		int y = this.pirateLocation.y;
 		spriteImageView.setX(x*50);
-		spriteImageView.setY(y*50);
+		spriteImageView.setY(y*50);	
 	}
 
 	public void setSailStrategy(SailStrategy sail) {
@@ -95,8 +98,10 @@ public class Pirate implements Observer, Runnable {
 
 	@Override
 	public void update(Observable ship, Object obj) {
-		if(ship instanceof Ship) {
+		if(ship instanceof Ship && this.sailStrategy instanceof ChaseSail) {
 			shipLocation = ((Ship)ship).getShipLocation();
+			sailStrategy.sail(this);
+			draw();
 		}
 	}
 	
