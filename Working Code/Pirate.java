@@ -98,7 +98,7 @@ public class Pirate implements Observer, Runnable {
 
 	@Override
 	public void update(Observable ship, Object obj) {
-		if(ship instanceof Ship && this.sailStrategy instanceof ChaseSail) {
+		if(ship instanceof Ship && this.sailStrategy instanceof ChaseSail) { //only update for chase sail
 			shipLocation = ((Ship)ship).getShipLocation();
 			sailStrategy.sail(this);
 			draw();
