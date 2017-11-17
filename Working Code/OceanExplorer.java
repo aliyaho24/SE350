@@ -13,20 +13,21 @@ public class OceanExplorer extends Application{
 
 	boolean[][] islandMap;
 	AnchorPane root;
-	final int dimensions = 20;
-	final int islandCount = 60;
 	final int scalingFactor = 50;
 	OceanMap oceanMap;
 	Image shipImage;
 	ImageView shipImageView;
-	Scene scene; 
+	ImageView treasureImageView;
+	Image treasureImage;
+	Scene scene;
+	Treasure treasure;
 	Ship ship;
 	
 	@Override
 	public void start(Stage mapStage) throws Exception {
 		
 		//generate the ocean
-		oceanMap = new OceanMap(dimensions,islandCount);
+		oceanMap = OceanMap.getGrid();
 		islandMap = oceanMap.getMap();
 		
 		root = new AnchorPane();
@@ -38,16 +39,14 @@ public class OceanExplorer extends Application{
 		//so you guys can see it work :)
 		PirateFactory factory = new PirateFactory(oceanMap);
 		Pirate pirate = factory.createPirate();
-		Pirate pirate2 = factory.createPirate();
 		ship.addObserver(pirate);
-		ship.addObserver(pirate2);
 		pirate.addToPane(root);
-		pirate2.addToPane(root);
 		SailStrategy vertical = new VerticalSail();
-		SailStrategy horizontal = new HorizontalSail();
 		pirate.setSailStrategy(vertical);
-		pirate2.setSailStrategy(horizontal);
+//		pirate.start();
+//		spawnPirates(1);
 		loadShipImage();
+		loadTreasureImage();
 			
 		scene = new Scene(root,1000,1000);
 		mapStage.setScene(scene);
@@ -57,35 +56,33 @@ public class OceanExplorer extends Application{
 	}
 	
 	//draw ocean and islands
-	public void drawMap() {
-		for(int x = 0; x < dimensions; x++){
-			for(int y = 0; y < dimensions; y++){
+	public void drawMap(){
+		for(int x = 0; x < oceanMap.getDimensions(); x++){
+			for(int y = 0; y < OceanMap.getGrid().getDimensions(); y++){
 				Rectangle rect = new Rectangle(x*scalingFactor,y*scalingFactor,scalingFactor,scalingFactor);
 				rect.setStroke(Color.BLACK);
 				if(islandMap[x][y])
 				    rect.setFill(Color.GREEN);
 				else
 					rect.setFill(Color.PALETURQUOISE);
-					root.getChildren().add(rect);
+				root.getChildren().add(rect);
 			}
 		}
 	}
 
-	/*
-	public void spawnPirates(int n) {
-		
-		PirateFactory factory = new PirateFactory(oceanMap);
-		while(n>0) {
-			Pirate pirate = factory.createPirate();
-			ship.addObserver(pirate);
-			pirate.addToPane(root);
-			SailStrategy snake = new SnakeSail(); 
-			pirate.setSailStrategy(snake);
-			pirate.start();
-			n--;
-		}
-	}
-*/
+//	public void spawnPirates(int n) {
+//		
+//		PirateFactory factory = new PirateFactory(oceanMap);
+//		while(n>0) {
+//			Pirate pirate = factory.createPirate();
+//			ship.addObserver(pirate);
+//			pirate.addToPane(root);
+//			SailStrategy snake = new SnakeSail(); 
+//			pirate.setSailStrategy(snake);
+//			pirate.start();
+//			n--;
+//		}
+//	}
 	
 	private void loadShipImage(){	
 		Image shipImage = new Image("ship.png",50,50, true, true);
@@ -95,6 +92,13 @@ public class OceanExplorer extends Application{
 		root.getChildren().add(shipImageView);
 	}
 	
+	private void loadTreasureImage(){
+		Image treasureImage = new Image("Treasure.png",50,50,true,true);
+		treasureImageView = new ImageView(treasureImage);
+		treasureImageView.setX(oceanMap.getTreasureLocation().x*scalingFactor);
+		treasureImageView.setY(oceanMap.getTreasureLocation().y*scalingFactor);
+		root.getChildren().add(treasureImageView);
+	}
 	private void startSailing() {
 		 scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			
