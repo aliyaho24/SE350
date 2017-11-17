@@ -5,14 +5,14 @@ public class VerticalSail implements SailStrategy{
 	
 	public void sail(Pirate pirate) {
 		
-		//modulo of count to allow back and forth movement
-		if (count%6 <= 2 && pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y-1)) {
-			pirate.pirateLocation.y--;	
+		if(count%4 < 2 && pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y-1)) {
+			pirate.pirateLocation.y--;
 		}
-		else if (count%6 >= 3 && pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y+1)){
-				pirate.pirateLocation.y++;
-			}
-		count++;
+		
+		else if (count%4 >= 2 && pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y+1)) {
+			pirate.pirateLocation.y++;
+		}	
+		count++;		
 	}
 
 }
