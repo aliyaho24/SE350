@@ -25,12 +25,15 @@ public class Pirate implements Observer {
 		this.map = oceanMap;
 		this.shipLocation = map.shipLocation;
 		this.sailStrategy = new HorizontalSail();		//default sail strategy
-		while(x != -1) {
-    			pirateLocation= new Point(rand.nextInt(map.dimensions),rand.nextInt(map.dimensions));
-    			if(oceanMap.islands[(int) pirateLocation.getX()][(int) pirateLocation.getY()]) {
-    				x = 0;
+		boolean placedPirate = false;
+		int x,y;
+		while(!placedPirate) {
+			x = rand.nextInt(map.dimensions);
+			y = rand.nextInt(map.dimensions); 
+   			if(oceanMap.isOcean(x, y)) {
+   				pirateLocation = new Point(x,y);
+   				placedPirate = true;
     			}
-    			else x = x -1;
     		}
 	}
 	/*
