@@ -1,4 +1,6 @@
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 // This class is responsible for generate a grid representing the island map
@@ -10,6 +12,7 @@ public class OceanMap {
 	Random rand = new Random();
 	Point shipLocation;
 	Point treasureLocation;
+	List<Pirate> pirateShips = new ArrayList<Pirate>();
 	private static OceanMap Grid;
 	
 	
