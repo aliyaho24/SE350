@@ -19,6 +19,7 @@ public class Pirate implements Observer {
 //	Boolean done = false;
 	Image spriteImage = new Image("pirateship.png",50,50,true, true);
 	ImageView spriteImageView = new ImageView(spriteImage);
+	boolean youLose = false;
 	
 	public Pirate(OceanMap oceanMap) {
 		
@@ -35,6 +36,7 @@ public class Pirate implements Observer {
    				placedPirate = true;
     			}
     		}
+		oceanMap.pirateShips.add(this);
 	}
 	/*
 	public void start() {
@@ -78,6 +80,10 @@ public class Pirate implements Observer {
 		int y = this.pirateLocation.y;
 		spriteImageView.setX(x*50);
 		spriteImageView.setY(y*50);	
+	}
+	
+	public void youLose() {
+		boolean youLose = true;
 	}
 
 	public void setSailStrategy(SailStrategy sail) {
