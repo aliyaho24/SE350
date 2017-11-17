@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -39,10 +42,16 @@ public class OceanExplorer extends Application{
 		//so you guys can see it work :)
 		PirateFactory factory = new PirateFactory(oceanMap);
 		Pirate pirate = factory.createPirate();
+		Pirate pirate2 = factory.createPirate();
 		ship.addObserver(pirate);
+		ship.addObserver(pirate2);
+		pirate2.addToPane(root);
 		pirate.addToPane(root);
 		SailStrategy vertical = new VerticalSail();
-		pirate.setSailStrategy(vertical);
+		SailStrategy chase = new ChaseSail();
+		pirate.setSailStrategy(chase);
+		pirate2.setSailStrategy(chase);
+		
 //		pirate.start();
 //		spawnPirates(1);
 		loadShipImage();
