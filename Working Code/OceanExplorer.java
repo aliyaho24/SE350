@@ -38,12 +38,15 @@ public class OceanExplorer extends Application{
 		//so you guys can see it work :)
 		PirateFactory factory = new PirateFactory(oceanMap);
 		Pirate pirate = factory.createPirate();
+		Pirate pirate2 = factory.createPirate();
 		ship.addObserver(pirate);
+		ship.addObserver(pirate2);
 		pirate.addToPane(root);
+		pirate2.addToPane(root);
 		SailStrategy vertical = new VerticalSail();
+		SailStrategy horizontal = new HorizontalSail();
 		pirate.setSailStrategy(vertical);
-		pirate.start();
-		spawnPirates(1);
+		pirate2.setSailStrategy(horizontal);
 		loadShipImage();
 			
 		scene = new Scene(root,1000,1000);
@@ -63,11 +66,12 @@ public class OceanExplorer extends Application{
 				    rect.setFill(Color.GREEN);
 				else
 					rect.setFill(Color.PALETURQUOISE);
-				root.getChildren().add(rect);
+					root.getChildren().add(rect);
 			}
 		}
 	}
 
+	/*
 	public void spawnPirates(int n) {
 		
 		PirateFactory factory = new PirateFactory(oceanMap);
@@ -81,6 +85,7 @@ public class OceanExplorer extends Application{
 			n--;
 		}
 	}
+*/
 	
 	private void loadShipImage(){	
 		Image shipImage = new Image("ship.png",50,50, true, true);
