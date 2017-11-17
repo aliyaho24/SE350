@@ -6,17 +6,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class Pirate implements Observer, Runnable {
+public class Pirate implements Observer {
 	
 	Point shipLocation;
 	Point pirateLocation;
 	SailStrategy sailStrategy;
 	OceanMap map;
 	Random rand = new Random();
-	Random randomSpeed = new Random();
+//	Random randomSpeed = new Random();
 	int x = 0;
-	protected Thread pirateThread;
-	Boolean done = false;
+//	protected Thread pirateThread;
+//	Boolean done = false;
 	Image spriteImage = new Image("pirateship.png",50,50,true, true);
 	ImageView spriteImageView = new ImageView(spriteImage);
 	
@@ -24,7 +24,7 @@ public class Pirate implements Observer, Runnable {
 		
 		this.map = oceanMap;
 		this.shipLocation = map.shipLocation;
-		this.sailStrategy = new SnakeSail();		//default sail strategy
+		this.sailStrategy = new HorizontalSail();		//default sail strategy
 		while(x != -1) {
     			pirateLocation= new Point(rand.nextInt(map.dimensions),rand.nextInt(map.dimensions));
     			if(oceanMap.islands[(int) pirateLocation.getX()][(int) pirateLocation.getY()]) {
@@ -33,7 +33,7 @@ public class Pirate implements Observer, Runnable {
     			else x = x -1;
     		}
 	}
-	
+	/*
 	public void start() {
 		pirateThread = new Thread(this);
 		pirateThread.start();
@@ -63,6 +63,7 @@ public class Pirate implements Observer, Runnable {
 			}	
 		}
 	}
+	*/
 	
 	public void addToPane(AnchorPane root) {
 		root.getChildren().add(spriteImageView);
@@ -98,7 +99,7 @@ public class Pirate implements Observer, Runnable {
 
 	@Override
 	public void update(Observable ship, Object obj) {
-		if(ship instanceof Ship && this.sailStrategy instanceof ChaseSail) { //only update for chase sail
+		if(ship instanceof Ship) { 
 			shipLocation = ((Ship)ship).getShipLocation();
 			sailStrategy.sail(this);
 			draw();
