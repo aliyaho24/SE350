@@ -8,7 +8,7 @@ public class PirateFactory {
 	
 	public Pirate createPirate() {
 		Pirate pirate = new Pirate(map);
-	//	pirate.draw();
+		pirate.draw();
 		return pirate;
 	}
 	
