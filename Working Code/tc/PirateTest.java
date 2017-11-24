@@ -13,6 +13,7 @@ public class PirateTest {
 	
 	@Test
 	public void test() {
+
 		Pirate jack = new Pirate(oceanMap);
 		Pirate krabs = new Pirate(oceanMap);
 		SailStrategy horizontal = new HorizontalSail();
@@ -25,7 +26,7 @@ public class PirateTest {
 		krabs.setY(4);
 		krabs.sail();
 		jack.sail();
-		//assertTrue(jack.getPirateLocation()!=krabs.getPirateLocation());	
+		assertTrue(jack.getPirateLocation()!=krabs.getPirateLocation());	
 	}
 
 }
