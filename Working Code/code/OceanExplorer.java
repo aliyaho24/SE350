@@ -52,7 +52,7 @@ public class OceanExplorer extends Application{
 		enemy1.addToPane(root);
 		enemy2.addToPane(root);
 		enemy3.addToPane(root);
-		spawnPirateFleet(3,4,2);
+		spawnPirateFleet(2,2,2);
 		
 		// Adding monsters onto screne
 		serpent = new Serpent(scalingFactor, oceanMap,false);
