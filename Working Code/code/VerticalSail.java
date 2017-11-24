@@ -6,18 +6,16 @@ public class VerticalSail implements SailStrategy{
 	
 	public void sail(Pirate pirate) {
 		
-		if(count%4 < 2 && pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y-1)) {
-			pirate.pirateLocation.y--;
+		if(count%4 < 2 && pirate.pirateLocation.y > 0) {
+			if (pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y-1)) 
+				pirate.pirateLocation.y--;
 		}
 		
-		else if (count%4 >= 2 && pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y+1)) {
-			pirate.pirateLocation.y++;
+		else if (count%4 >= 2 && pirate.pirateLocation.y < pirate.map.getDimensions()) {
+				if (pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y+1)) 
+					pirate.pirateLocation.y++;
 		}	
 		count++;	
-		
-		if (pirate.shipLocation == pirate.pirateLocation) {
-			pirate.youLose();
-		}
 	}
 
 }

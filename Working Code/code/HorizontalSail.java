@@ -6,17 +6,15 @@ public class HorizontalSail implements SailStrategy{
 	
 	public void sail(Pirate pirate) {
 		
-		if(count%4 < 2 && pirate.map.isOcean(pirate.pirateLocation.x-1, pirate.pirateLocation.y)) {
-			pirate.pirateLocation.x--;
+		if(count%4 < 2 && pirate.pirateLocation.x > 0) {
+			if (pirate.map.isOcean(pirate.pirateLocation.x-1, pirate.pirateLocation.y))
+				pirate.pirateLocation.x--;
 		}
 		
-		else if (count%4 >= 2 && pirate.map.isOcean(pirate.pirateLocation.x+1, pirate.pirateLocation.y)) {
-			pirate.pirateLocation.x++;
+		else if (count%4 >= 2 && pirate.pirateLocation.x < pirate.map.getDimensions()) {
+				if (pirate.map.isOcean(pirate.pirateLocation.x+1, pirate.pirateLocation.y)) 
+					pirate.pirateLocation.x++;
 		}	
 		count++;	
-		
-		if (pirate.shipLocation == pirate.pirateLocation) {
-			pirate.youLose();
-		}
 	}	
 }
