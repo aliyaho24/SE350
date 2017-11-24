@@ -30,8 +30,7 @@ public class OceanMap {
 				}
 			}
 		}
-		return Grid;
-		
+		return Grid;	
 	}
 	
 	// Create an empty map

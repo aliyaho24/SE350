@@ -12,13 +12,16 @@ import javafx.stage.Stage;
 public class OceanExplorer extends Application{
 
 	boolean[][] islandMap;
+	boolean win = false;
 	AnchorPane root;
 	final int scalingFactor = 50;
 	OceanMap oceanMap;
 	Image shipImage;
+	Image winImage;
+	Image treasureImage;
 	ImageView shipImageView;
 	ImageView treasureImageView;
-	Image treasureImage;
+	ImageView winImageView;
 	Scene scene;
 	Treasure treasure;
 	Ship ship;
@@ -34,6 +37,8 @@ public class OceanExplorer extends Application{
 		drawMap();
 		
 		ship = new Ship(oceanMap);
+		
+		treasure = new Treasure(oceanMap);
 
 		//spawning a ship doing vertical and horizontal sail just for test purposes 
 		//so you guys can see it work :)
@@ -90,6 +95,7 @@ public class OceanExplorer extends Application{
 		shipImageView.setX(oceanMap.getShipLocation().x*scalingFactor);
 		shipImageView.setY(oceanMap.getShipLocation().y*scalingFactor);
 		root.getChildren().add(shipImageView);
+		
 	}
 	
 	private void loadTreasureImage(){
@@ -98,12 +104,17 @@ public class OceanExplorer extends Application{
 		treasureImageView.setX(oceanMap.getTreasureLocation().x*scalingFactor);
 		treasureImageView.setY(oceanMap.getTreasureLocation().y*scalingFactor);
 		root.getChildren().add(treasureImageView);
+		
+		Image winImage = new Image("win.gif",50, 50, false, false);
+		winImageView = new ImageView(winImage);
+		winImageView.setX(oceanMap.getTreasureLocation().x*scalingFactor);
+		winImageView.setY(oceanMap.getTreasureLocation().y*scalingFactor);
 	}
 	private void startSailing() {
 		 scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			
 			public void handle(KeyEvent ke) {
-	
+				if (!win)
 				switch(ke.getCode()){
 					case RIGHT:
 						ship.goEast();
@@ -120,12 +131,26 @@ public class OceanExplorer extends Application{
 					default:
 						break;
 			}
+			
 			shipImageView.setX(ship.getShipLocation().x*scalingFactor);
 			shipImageView.setY(ship.getShipLocation().y*scalingFactor);
 			
+			if(ship.getShipLocation().equals(treasure.getTreasureLocation())){	
+	    		  setFoundTargetImage();
+	    		win = true;
+	    		}	
+			
 			}
+			
 		});	
 	}
+	
+	protected void setFoundTargetImage(){
+    	if(root.getChildren().contains(shipImageView)){
+			root.getChildren().remove(shipImageView);	
+			root.getChildren().add(winImageView);		
+		}
+    }
 	
 	public static void main (String[] args) {
 		launch(args);
