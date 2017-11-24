@@ -1,6 +1,4 @@
 package code;
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -40,26 +38,19 @@ public class OceanExplorer extends Application{
 		root = new AnchorPane();
 		drawMap();
 		
-		ship = new Ship(oceanMap);
-		
+		ship = new Ship(oceanMap);	
 		treasure = new Treasure(oceanMap);
 
-		//spawning a ship doing vertical and horizontal sail just for test purposes 
-		//so you guys can see it work :)
-		PirateFactory factory = new PirateFactory(oceanMap);
-		Pirate pirate = factory.createPirate();
-		Pirate pirate2 = factory.createPirate();
-		ship.addObserver(pirate);
-		ship.addObserver(pirate2);
-		pirate2.addToPane(root);
-		pirate.addToPane(root);
-		SailStrategy vertical = new VerticalSail();
-		SailStrategy chase = new ChaseSail();
-		pirate.setSailStrategy(chase);
-		pirate2.setSailStrategy(chase);
+		EnemyFactory enemyFactory = new EnemyFactory(oceanMap);
+		Enemy enemy1 = enemyFactory.createEnemy("submarine");
+		Enemy enemy2 = enemyFactory.createEnemy("pirate");
+		Enemy enemy3 = enemyFactory.createEnemy("submarine");
+		enemy1.addToPane(root);
+		enemy2.addToPane(root);
+		enemy3.addToPane(root);
+		spawnPirateFleet(3,4,2);
 		
-//		pirate.start();
-//		spawnPirates(1);
+		ship.addMultipleObservers(oceanMap.enemyShips);
 		loadShipImage();
 		loadTreasureImage();
 			
@@ -85,19 +76,23 @@ public class OceanExplorer extends Application{
 		}
 	}
 
-//	public void spawnPirates(int n) {
-//		
-//		PirateFactory factory = new PirateFactory(oceanMap);
-//		while(n>0) {
-//			Pirate pirate = factory.createPirate();
-//			ship.addObserver(pirate);
-//			pirate.addToPane(root);
-//			SailStrategy snake = new SnakeSail(); 
-//			pirate.setSailStrategy(snake);
-//			pirate.start();
-//			n--;
-//		}
-//	}
+	//method to spawn specific amounts of each pirate ship type
+	public void spawnPirateFleet(int vertical, int horizontal, int chase) {
+		
+		EnemyFactory pirateFleetFactory = new EnemyFactory(oceanMap);
+		SailStrategy v = new VerticalSail();
+		SailStrategy h = new HorizontalSail();
+		SailStrategy c = new ChaseSail();
+		
+		for (int i=vertical; i>0; i--) {
+			pirateFleetFactory.createPirate(v).addToPane(root);}
+		
+		for (int i=horizontal; i>0; i--) {
+			pirateFleetFactory.createPirate(h).addToPane(root);}
+		
+		for (int i=chase; i>0; i--) {
+			pirateFleetFactory.createPirate(c).addToPane(root);}
+	}
 	
 	private void loadShipImage(){	
 		Image shipImage = new Image("ship.png",50,50, true, true);
@@ -105,7 +100,6 @@ public class OceanExplorer extends Application{
 		shipImageView.setX(oceanMap.getShipLocation().x*scalingFactor);
 		shipImageView.setY(oceanMap.getShipLocation().y*scalingFactor);
 		root.getChildren().add(shipImageView);
-		
 	}
 	
 	private void loadTreasureImage(){
@@ -120,6 +114,7 @@ public class OceanExplorer extends Application{
 		winImageView.setX(oceanMap.getTreasureLocation().x*scalingFactor);
 		winImageView.setY(oceanMap.getTreasureLocation().y*scalingFactor);
 	}
+	
 	private void startSailing() {
 		 scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			
