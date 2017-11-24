@@ -1,6 +1,8 @@
 package code;
 import java.awt.Point;
+import java.util.LinkedList;
 import java.util.Observable;
+import java.util.Observer;
 
 public class Ship extends Observable {
 
@@ -16,6 +18,13 @@ public class Ship extends Observable {
 		return currentLocation;
 	}
 	 
+	//method to register multiple enemy ships
+	public void addMultipleObservers(LinkedList<Enemy> enemies) {
+		for (Enemy temp : enemies) {
+            this.addObserver((Observer) temp);
+        }
+	}
+	
 	public void goEast(){
 	    	if(currentLocation.x<oceanMap.getDimensions()-1 && 
 	    	   oceanMap.isOcean(currentLocation.x+1, currentLocation.y)){
