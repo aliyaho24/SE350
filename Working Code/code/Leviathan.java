@@ -8,7 +8,7 @@ import javafx.scene.shape.Circle;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
-//Composite: 
+//Composite Class
 
 public class Leviathan implements Monster, Runnable {
 	/*

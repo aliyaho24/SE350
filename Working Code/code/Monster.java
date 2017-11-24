@@ -18,4 +18,5 @@ public interface Monster {
 	public Point getCurrentLocation();				// get current location
 	public void setLocation(Point pos);				// set location
 	void addToPane(ObservableList<Node> scene);
+	
 }

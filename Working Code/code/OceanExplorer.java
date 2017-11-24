@@ -54,7 +54,7 @@ public class OceanExplorer extends Application{
 		enemy3.addToPane(root);
 		spawnPirateFleet(3,4,2);
 		
-		// Adding monsters (test)
+		// Adding monsters onto screne
 		serpent = new Serpent(scalingFactor, oceanMap,false);
 		serpent.addToPane(root.getChildren());
 		serpentThread = new Thread(serpent);

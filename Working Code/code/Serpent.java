@@ -6,7 +6,7 @@ import java.util.Random;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
-
+// Leaf Node: generates serpent
 public class Serpent implements Monster, Runnable{
 
 	OceanMap map;
