@@ -3,6 +3,10 @@ package code;
 public class EnemyFactory {
 	OceanMap map;
 	
+	public EnemyFactory(OceanMap oceanmap) {
+		this.map = oceanmap;
+	}
+	
 	//method to create any enemy
 		public Enemy createEnemy(String enemyType) {
 			
