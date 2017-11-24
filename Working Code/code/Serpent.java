@@ -82,7 +82,7 @@ public class Serpent implements Monster, Runnable{
 	@Override
 	public void setX(int dx) {
 		this.x = dx;
-		setPositionY(x);
+		setPositionX(x);
 	}
 
 	@Override

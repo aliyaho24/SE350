@@ -54,16 +54,8 @@ public class OceanExplorer extends Application{
 		enemy3.addToPane(root);
 		spawnPirateFleet(3,4,2);
 		
-		// Adding monsters onto screne
-		serpent = new Serpent(scalingFactor, oceanMap,false);
-		serpent.addToPane(root.getChildren());
-		serpentThread = new Thread(serpent);
-		serpentThread.start();
-		
-		levi = new Leviathan(scalingFactor, oceanMap, false);
-		levi.addToPane(root.getChildren());
-		leviThread = new Thread(levi);
-		leviThread.start();
+		// Adding monsters onto 
+		spawnSerpents(3);
 		
 		ship.addMultipleObservers(oceanMap.enemyShips);
 		loadShipImage();
@@ -74,6 +66,25 @@ public class OceanExplorer extends Application{
 		mapStage.setTitle("Christopher Columbus Sails the Ocean Blue");
 		mapStage.show();
 		startSailing();	
+	}
+	
+	public void spawnSerpents(int i) {
+		while (i > 0) {
+			serpent = new Serpent(scalingFactor, oceanMap, false);
+			serpent.addToPane(root.getChildren());
+			serpentThread = new Thread(serpent);
+			serpentThread.start();
+			i--;
+		}
+	}
+	
+	public void spawnLeviathans(int j) {
+		while (j>0) {
+			levi = new Leviathan(scalingFactor, oceanMap, false);
+			levi.addToPane(root.getChildren());
+			leviThread =new Thread(levi);
+			leviThread.start();
+		}
 	}
 	
 	//draw ocean and islands
