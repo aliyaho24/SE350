@@ -54,8 +54,9 @@ public class OceanExplorer extends Application{
 		enemy3.addToPane(root);
 		spawnPirateFleet(2,2,2);
 		
-		// Adding monsters onto 
+		// Adding monsters onto the map
 		spawnSerpents(3);
+		spawnLeviathans(1);
 		
 		ship.addMultipleObservers(oceanMap.enemyShips);
 		loadShipImage();
