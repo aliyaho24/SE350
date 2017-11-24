@@ -59,7 +59,7 @@ public class Submarine implements Observer, Enemy {
 				map.isOcean(submarineLocation.x, submarineLocation.y-1)) 
 					submarineLocation.y--;
 		
-		else if (submarineLocation.y == shipLocation.y &&
+		if (submarineLocation.y == shipLocation.y &&
 				submarineLocation.x > shipLocation.x && 
 				map.isOcean(submarineLocation.x-1, submarineLocation.y)) 
 					submarineLocation.x--;
