@@ -28,6 +28,12 @@ public class OceanExplorer extends Application{
 	Scene scene;
 	Treasure treasure;
 	Ship ship;
+	Serpent serpent;
+	Thread serpentThread;
+	Leviathan levi;
+	Thread leviThread;
+	Monster[] component = new Monster[10];
+	
 	
 	@Override
 	public void start(Stage mapStage) throws Exception {
@@ -45,22 +51,33 @@ public class OceanExplorer extends Application{
 
 		//spawning a ship doing vertical and horizontal sail just for test purposes 
 		//so you guys can see it work :)
-		PirateFactory factory = new PirateFactory(oceanMap);
-		Pirate pirate = factory.createPirate();
-		Pirate pirate2 = factory.createPirate();
-		ship.addObserver(pirate);
-		ship.addObserver(pirate2);
-		pirate2.addToPane(root);
-		pirate.addToPane(root);
-		SailStrategy vertical = new VerticalSail();
-		SailStrategy chase = new ChaseSail();
-		pirate.setSailStrategy(chase);
-		pirate2.setSailStrategy(chase);
+//		PirateFactory factory = new PirateFactory(oceanMap);
+//		Pirate pirate = factory.createPirate();
+//		Pirate pirate2 = factory.createPirate();
+//		ship.addObserver(pirate);
+//		ship.addObserver(pirate2);
+//		pirate2.addToPane(root);
+//		pirate.addToPane(root);
+//		SailStrategy vertical = new VerticalSail();
+//		SailStrategy chase = new ChaseSail();
+//		pirate.setSailStrategy(chase);
+//		pirate2.setSailStrategy(chase);
 		
 //		pirate.start();
 //		spawnPirates(1);
 		loadShipImage();
 		loadTreasureImage();
+		
+		// Adding monsters (test)
+		serpent = new Serpent(scalingFactor, oceanMap,false);
+		serpent.addToPane(root.getChildren());
+		serpentThread = new Thread(serpent);
+		serpentThread.start();
+		
+		levi = new Leviathan(scalingFactor, oceanMap, false);
+		levi.addToPane(root.getChildren());
+		leviThread = new Thread(levi);
+		leviThread.start();
 			
 		scene = new Scene(root,1000,1000);
 		mapStage.setScene(scene);
@@ -83,7 +100,8 @@ public class OceanExplorer extends Application{
 			}
 		}
 	}
-
+	
+	
 //	public void spawnPirates(int n) {
 //		
 //		PirateFactory factory = new PirateFactory(oceanMap);

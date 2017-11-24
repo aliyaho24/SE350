@@ -13,6 +13,7 @@ public class OceanMap {
 	Point shipLocation;
 	Point treasureLocation;
 	List<Pirate> pirateShips = new ArrayList<Pirate>();
+	List<Monster> monsters = new ArrayList<Monster>();
 	private static OceanMap Grid;
 	
 	
