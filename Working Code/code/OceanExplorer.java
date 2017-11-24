@@ -27,6 +27,10 @@ public class OceanExplorer extends Application{
 	Scene scene;
 	Treasure treasure;
 	Ship ship;
+	Serpent serpent;
+	Thread serpentThread;
+	Leviathan levi;
+	Thread leviThread;
 	
 	@Override
 	public void start(Stage mapStage) throws Exception {
@@ -50,10 +54,21 @@ public class OceanExplorer extends Application{
 		enemy3.addToPane(root);
 		spawnPirateFleet(3,4,2);
 		
+		// Adding monsters onto screne
+		serpent = new Serpent(scalingFactor, oceanMap,false);
+		serpent.addToPane(root.getChildren());
+		serpentThread = new Thread(serpent);
+		serpentThread.start();
+		
+		levi = new Leviathan(scalingFactor, oceanMap, false);
+		levi.addToPane(root.getChildren());
+		leviThread = new Thread(levi);
+		leviThread.start();
+		
 		ship.addMultipleObservers(oceanMap.enemyShips);
 		loadShipImage();
 		loadTreasureImage();
-			
+		
 		scene = new Scene(root,1000,1000);
 		mapStage.setScene(scene);
 		mapStage.setTitle("Christopher Columbus Sails the Ocean Blue");
