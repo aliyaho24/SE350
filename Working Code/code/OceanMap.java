@@ -15,6 +15,7 @@ public class OceanMap {
 	Point shipLocation;
 	Point treasureLocation;
 	LinkedList<Enemy> enemyShips = new LinkedList<Enemy>();
+	List<Monster> monsters = new ArrayList<Monster>();
 	private static OceanMap Grid;
 	
 	
