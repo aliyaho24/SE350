@@ -29,7 +29,7 @@ public class ChaseSail implements SailStrategy {
 		    		} 
 				
 				//CC is west
-			    	if(pirateX >0 && pirateX > shipX && pirateY == shipY &&
+				else if(pirateX >0 && pirateX > shipX && pirateY == shipY &&
 			    		oceanMap.isOcean(pirateX-1, pirateY)){
 //			    		for (Enemy p: oceanMap.enemyShips) {
 //			    			Pirate temp = (Pirate) p;
@@ -40,7 +40,7 @@ public class ChaseSail implements SailStrategy {
 			    	}  
 			    	
 			    //CC is north
-			    	if(pirateY>0 && pirateY > shipY && pirateX == shipX &&
+				if(pirateY>0 && pirateY > shipY && pirateX == shipX &&
 			    		oceanMap.isOcean(pirateX, pirateY-1)){
 //			    		for (Enemy p: oceanMap.enemyShips) {
 //			    			Pirate temp = (Pirate) p;
@@ -51,7 +51,7 @@ public class ChaseSail implements SailStrategy {
 			    	}
 			    	
 			    //CC is south
-			    	if(pirateY<oceanMap.getDimensions()-1 && pirateY < shipY && pirateX == shipX &&
+				else if(pirateY<oceanMap.getDimensions()-1 && pirateY < shipY && pirateX == shipX &&
 			    		oceanMap.isOcean(pirateX, pirateY+1)){
 //			    		for (Enemy p: oceanMap.enemyShips) {
 //			    			Pirate temp = (Pirate) p;
@@ -61,7 +61,7 @@ public class ChaseSail implements SailStrategy {
 			    	}
 			    	
 			    	//CC is northwest
-			    if (shipX < pirateX && shipY < pirateY) {
+				if (shipX < pirateX && shipY < pirateY) {
 					if (pirateX - 1 > 0 && pirateY - 1 > 0 &&
 						oceanMap.isOcean(pirateX - 1, pirateY - 1)) {
 //							for (Enemy p: oceanMap.enemyShips) {
@@ -75,7 +75,7 @@ public class ChaseSail implements SailStrategy {
 			    }
 				
 			    //CC is northeast
-				if (shipX > pirateX && shipY < pirateY) { 
+				else if (shipX > pirateX && shipY < pirateY) { 
 						if (pirateX + 1 < oceanMap.getDimensions() &&
 							pirateY - 1 > 0 &&
 							oceanMap.isOcean(pirateX + 1, pirateY - 1)) {
@@ -86,7 +86,6 @@ public class ChaseSail implements SailStrategy {
 									pirate.pirateLocation.x++;
 									pirate.pirateLocation.y--;
 								
-							
 						}
 				}
 				
@@ -106,7 +105,7 @@ public class ChaseSail implements SailStrategy {
 				}
 				
 				//CC is south east
-				if (shipX > pirateX && shipY > pirateY) {	
+				else if (shipX > pirateX && shipY > pirateY) {	
 					if (pirateX + 1 < oceanMap.getDimensions() &&
 						pirateY + 1 < oceanMap.getDimensions() &&
 						oceanMap.isOcean(pirateX + 1, pirateY + 1)) {
