@@ -12,7 +12,11 @@ public class VerticalSail implements SailStrategy{
 		else if (count%4 >= 2 && pirate.map.isOcean(pirate.pirateLocation.x, pirate.pirateLocation.y+1)) {
 			pirate.pirateLocation.y++;
 		}	
-		count++;		
+		count++;	
+		
+		if (pirate.shipLocation == pirate.pirateLocation) {
+			pirate.youLose();
+		}
 	}
 
 }

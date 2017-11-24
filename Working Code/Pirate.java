@@ -19,19 +19,24 @@ public class Pirate implements Observer {
 //	Boolean done = false;
 	Image spriteImage = new Image("pirateship.png",50,50,true, true);
 	ImageView spriteImageView = new ImageView(spriteImage);
+	boolean youLose = false;
 	
 	public Pirate(OceanMap oceanMap) {
 		
 		this.map = oceanMap;
 		this.shipLocation = map.shipLocation;
 		this.sailStrategy = new HorizontalSail();		//default sail strategy
-		while(x != -1) {
-    			pirateLocation= new Point(rand.nextInt(map.dimensions),rand.nextInt(map.dimensions));
-    			if(oceanMap.islands[(int) pirateLocation.getX()][(int) pirateLocation.getY()]) {
-    				x = 0;
+		boolean placedPirate = false;
+		int x,y;
+		while(!placedPirate) {
+			x = rand.nextInt(map.dimensions);
+			y = rand.nextInt(map.dimensions); 
+   			if(oceanMap.isOcean(x, y)) {
+   				pirateLocation = new Point(x,y);
+   				placedPirate = true;
     			}
-    			else x = x -1;
     		}
+		oceanMap.pirateShips.add(this);
 	}
 	/*
 	public void start() {
@@ -75,6 +80,10 @@ public class Pirate implements Observer {
 		int y = this.pirateLocation.y;
 		spriteImageView.setX(x*50);
 		spriteImageView.setY(y*50);	
+	}
+	
+	public void youLose() {
+		boolean youLose = true;
 	}
 
 	public void setSailStrategy(SailStrategy sail) {

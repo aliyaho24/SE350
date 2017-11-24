@@ -13,5 +13,9 @@ public class HorizontalSail implements SailStrategy{
 			pirate.pirateLocation.x++;
 		}	
 		count++;	
+		
+		if (pirate.shipLocation == pirate.pirateLocation) {
+			pirate.youLose();
+		}
 	}	
 }
