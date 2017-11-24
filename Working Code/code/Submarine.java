@@ -16,7 +16,6 @@ public class Submarine implements Observer, Enemy {
 	OceanMap map;
 	Random rand = new Random();
 	String name = "submarine";
-	int x = 0;
 	Image spriteImage = new Image("submarine.png",50,50,true, true);
 	ImageView spriteImageView = new ImageView(spriteImage);
 	

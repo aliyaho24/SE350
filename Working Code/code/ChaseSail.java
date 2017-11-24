@@ -86,7 +86,6 @@ public class ChaseSail implements SailStrategy {
 									pirate.pirateLocation.x++;
 									pirate.pirateLocation.y--;
 								
-							
 						}
 				}
 				
