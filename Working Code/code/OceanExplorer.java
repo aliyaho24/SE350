@@ -55,8 +55,18 @@ public class OceanExplorer extends Application{
 		spawnPirateFleet(2,2,2);
 		
 		// Adding monsters onto the map
-		spawnSerpents(3);
-		spawnLeviathans(1);
+//		spawnSerpents(3);
+//		spawnLeviathans(1);
+		
+		serpent = new Serpent(scalingFactor, oceanMap,false);
+		serpent.addToPane(root.getChildren());
+		serpentThread = new Thread(serpent);
+		serpentThread.start();
+		
+		levi = new Leviathan(scalingFactor, oceanMap, false);
+		levi.addToPane(root.getChildren());
+		leviThread = new Thread(levi);
+		leviThread.start();
 		
 		ship.addMultipleObservers(oceanMap.enemyShips);
 		loadShipImage();
