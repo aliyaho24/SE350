@@ -33,7 +33,7 @@ public class ShipTest {
 		enemies.add(e3);
 		enemies.add(e4);
 
-		ship1 = new Ship(oceanMap);
+		ship1 = new Ship();
 		ship1.addMultipleObservers(enemies);
 		assertEquals(ship1.countObservers(),4);	
 	}
@@ -47,8 +47,8 @@ public class ShipTest {
 		NullEnemy e1 = new NullEnemy();
 		enemies.add(e1);
 		
-		ship1 = new Ship(oceanMap);
-		ship2 = new Ship(oceanMap);
+		ship1 = new Ship();
+		ship2 = new Ship();
 		ship1.addObserver(e1);
 		ship2.addMultipleObservers(enemies);
 		
