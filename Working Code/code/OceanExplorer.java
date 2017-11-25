@@ -42,7 +42,7 @@ public class OceanExplorer extends Application{
 		root = new AnchorPane();
 		drawMap();
 		
-		ship = new Ship(oceanMap);	
+		ship = new Ship();	
 		treasure = new Treasure(oceanMap);
 
 		EnemyFactory enemyFactory = new EnemyFactory(oceanMap);

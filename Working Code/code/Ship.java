@@ -9,9 +9,9 @@ public class Ship extends Observable {
 	Point currentLocation;
 	OceanMap oceanMap;
 	
-	public Ship(OceanMap map) {
-		this.oceanMap = map;
-		currentLocation = map.getShipLocation();
+	public Ship() {
+		oceanMap = OceanMap.getGrid();
+		currentLocation = oceanMap.getShipLocation();
 	}
 	
 	public Point getShipLocation() {
