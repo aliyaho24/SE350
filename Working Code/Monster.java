@@ -1,4 +1,3 @@
-package code;
 import java.awt.Point;
 
 import javafx.collections.ObservableList;
@@ -18,5 +17,4 @@ public interface Monster {
 	public Point getCurrentLocation();				// get current location
 	public void setLocation(Point pos);				// set location
 	void addToPane(ObservableList<Node> scene);
-	
 }

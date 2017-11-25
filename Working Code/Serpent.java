@@ -1,44 +1,27 @@
-package code;
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import java.awt.Point;
+import java.util.Random;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
-//Composite Class
+public class Serpent implements Monster, Runnable{
 
-public class Leviathan implements Monster, Runnable {
-	/*
-	 Jobs:
-	 	- create new instance of Leviathan when 2 serpents collide
-	 	- increase size of Leviathan each time it collides with a serpent
-	 	- Keep doing this until All serpents are devoured and only
-	 	  leviathans are on the map
-	 	- DON'T allow leviathan to be devoured by another leviathan (not required?)
-	 	- Change color indicating that indicates difference between
-	 	  serpent and leviathan
-	 */
-	
 	OceanMap map;
 	Boolean running = true;
 	int radius;
 	Random rand = new Random();
 	int scalingFactor;
-	int length = 0;
 	Point location;
-	Circle circle;
 	int x,y;
+	Circle circle;
 	boolean collision;
-	List<Monster> components = new ArrayList<Monster>();
 	
-	public Leviathan(int scale, OceanMap map, boolean collision) {
-		
+	public Serpent(int scalingFactor, OceanMap map, boolean collision) {
 		this.radius = 20;
-		this.scalingFactor = scale;
+		this.scalingFactor = scalingFactor;
 		this.collision = collision;
+		
 		this.map = map;
 		map.getMap();
 		
@@ -54,18 +37,11 @@ public class Leviathan implements Monster, Runnable {
 		
 		circle = new Circle();
 		circle.setRadius(radius);
-		circle.setFill(Color.RED);
+		circle.setFill(Color.LIMEGREEN);
 		setPositionX(x);
 		setPositionY(y);
-//		map.monsters.add(this);
-
-	}	
-	
-	@Override
-	public void addToPane(ObservableList<Node> scene) {
-		Circle circle = getCircle();
-		circle.setFill(Color.RED);
-		scene.add(circle);
+		map.monsters.add(this);
+		
 	}
 	
 	public Circle getCircle() {
@@ -74,40 +50,21 @@ public class Leviathan implements Monster, Runnable {
 	
 	public void setCircle(Circle circle) {
 		this.circle = circle;
-		circle.setFill(Color.RED);
 	}
 	
 	@Override
-	public void add(Monster monster) {
-		components.add(monster);
-		radius = radius +1;
-	}
-
-	@Override
-	public void remove(Monster monster) {
-		components.remove(monster);
-		radius = radius -1;
+	public void addToPane(ObservableList<Node> scene) {
+		Circle circle = getCircle();
+		scene.add(circle);
 	}
 	
 	public void move() {
 		int xMove = getX() + rand.nextInt(3)-1;
-		if (xMove >=0 && xMove<=20)
+		if (xMove >=0 && xMove <=20) 
 			setX(xMove);
 		int yMove = getY() + rand.nextInt(3)-1;
-		if (yMove >=0 && yMove <=20) 
+		if (yMove >=0 && yMove<=20) 
 			setY(yMove);
-	}
-
-	@Override
-	public void run() {
-		while (running) {
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			move();
-		}
 	}
 
 	@Override
@@ -123,7 +80,7 @@ public class Leviathan implements Monster, Runnable {
 	@Override
 	public void setX(int dx) {
 		this.x = dx;
-		setPositionX(x);
+		setPositionY(x);
 	}
 
 	@Override
@@ -155,5 +112,35 @@ public class Leviathan implements Monster, Runnable {
 	@Override
 	public void setLocation(Point pos) {
 		this.location = pos;
+	}
+	
+	public boolean getCollision() {
+		return collision;
+	}
+	
+	public void setCollision(boolean collision) {
+		this.collision = collision;
+	}
+	
+	@Override
+	public void run() {
+		while (running) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			move();
+		}
+	}
+	
+	@Override
+	public void add(Monster monster) {
+		// doesn't apply to leaf node
+	}
+
+	@Override
+	public void remove(Monster monster) {
+		// doesn't apply to leaf node
 	}
 }

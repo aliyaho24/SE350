@@ -1,4 +1,5 @@
-package code;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -31,6 +32,8 @@ public class OceanExplorer extends Application{
 	Thread serpentThread;
 	Leviathan levi;
 	Thread leviThread;
+	Monster[] component = new Monster[10];
+	
 	
 	@Override
 	public void start(Stage mapStage) throws Exception {
@@ -42,50 +45,45 @@ public class OceanExplorer extends Application{
 		root = new AnchorPane();
 		drawMap();
 		
-		ship = new Ship();	
+		ship = new Ship(oceanMap);
+		
 		treasure = new Treasure(oceanMap);
 
-		EnemyFactory enemyFactory = new EnemyFactory(oceanMap);
-		Enemy enemy1 = enemyFactory.createEnemy("submarine");
-		Enemy enemy2 = enemyFactory.createEnemy("pirate");
-		Enemy enemy3 = enemyFactory.createEnemy("submarine");
-		enemy1.addToPane(root);
-		enemy2.addToPane(root);
-		enemy3.addToPane(root);
-		spawnPirateFleet(2,2,2);
+		//spawning a ship doing vertical and horizontal sail just for test purposes 
+		//so you guys can see it work :)
+//		PirateFactory factory = new PirateFactory(oceanMap);
+//		Pirate pirate = factory.createPirate();
+//		Pirate pirate2 = factory.createPirate();
+//		ship.addObserver(pirate);
+//		ship.addObserver(pirate2);
+//		pirate2.addToPane(root);
+//		pirate.addToPane(root);
+//		SailStrategy vertical = new VerticalSail();
+//		SailStrategy chase = new ChaseSail();
+//		pirate.setSailStrategy(chase);
+//		pirate2.setSailStrategy(chase);
 		
-		// Adding monsters onto the map
-		spawnSerpents(3);
-		spawnLeviathans(1);
-		
-		ship.addMultipleObservers(oceanMap.enemyShips);
+//		pirate.start();
+//		spawnPirates(1);
 		loadShipImage();
 		loadTreasureImage();
 		
+		// Adding monsters (test)
+		serpent = new Serpent(scalingFactor, oceanMap,false);
+		serpent.addToPane(root.getChildren());
+		serpentThread = new Thread(serpent);
+		serpentThread.start();
+		
+		levi = new Leviathan(scalingFactor, oceanMap, false);
+		levi.addToPane(root.getChildren());
+		leviThread = new Thread(levi);
+		leviThread.start();
+			
 		scene = new Scene(root,1000,1000);
 		mapStage.setScene(scene);
 		mapStage.setTitle("Christopher Columbus Sails the Ocean Blue");
 		mapStage.show();
 		startSailing();	
-	}
-	
-	public void spawnSerpents(int i) {
-		while (i > 0) {
-			serpent = new Serpent(scalingFactor, oceanMap, false);
-			serpent.addToPane(root.getChildren());
-			serpentThread = new Thread(serpent);
-			serpentThread.start();
-			i--;
-		}
-	}
-	
-	public void spawnLeviathans(int j) {
-		while (j>0) {
-			levi = new Leviathan(scalingFactor, oceanMap, false);
-			levi.addToPane(root.getChildren());
-			leviThread =new Thread(levi);
-			leviThread.start();
-		}
 	}
 	
 	//draw ocean and islands
@@ -102,24 +100,21 @@ public class OceanExplorer extends Application{
 			}
 		}
 	}
-
-	//method to spawn specific amounts of each pirate ship type
-	public void spawnPirateFleet(int vertical, int horizontal, int chase) {
-		
-		EnemyFactory pirateFleetFactory = new EnemyFactory(oceanMap);
-		SailStrategy v = new VerticalSail();
-		SailStrategy h = new HorizontalSail();
-		SailStrategy c = new ChaseSail();
-		
-		for (int i=vertical; i>0; i--) {
-			pirateFleetFactory.createPirate(v).addToPane(root);}
-		
-		for (int i=horizontal; i>0; i--) {
-			pirateFleetFactory.createPirate(h).addToPane(root);}
-		
-		for (int i=chase; i>0; i--) {
-			pirateFleetFactory.createPirate(c).addToPane(root);}
-	}
+	
+	
+//	public void spawnPirates(int n) {
+//		
+//		PirateFactory factory = new PirateFactory(oceanMap);
+//		while(n>0) {
+//			Pirate pirate = factory.createPirate();
+//			ship.addObserver(pirate);
+//			pirate.addToPane(root);
+//			SailStrategy snake = new SnakeSail(); 
+//			pirate.setSailStrategy(snake);
+//			pirate.start();
+//			n--;
+//		}
+//	}
 	
 	private void loadShipImage(){	
 		Image shipImage = new Image("ship.png",50,50, true, true);
@@ -127,6 +122,7 @@ public class OceanExplorer extends Application{
 		shipImageView.setX(oceanMap.getShipLocation().x*scalingFactor);
 		shipImageView.setY(oceanMap.getShipLocation().y*scalingFactor);
 		root.getChildren().add(shipImageView);
+		
 	}
 	
 	private void loadTreasureImage(){
@@ -141,7 +137,6 @@ public class OceanExplorer extends Application{
 		winImageView.setX(oceanMap.getTreasureLocation().x*scalingFactor);
 		winImageView.setY(oceanMap.getTreasureLocation().y*scalingFactor);
 	}
-	
 	private void startSailing() {
 		 scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			

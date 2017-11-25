@@ -1,7 +1,5 @@
-package code;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -10,11 +8,11 @@ import java.util.Random;
 public class OceanMap {
 	boolean[][] islands;
 	static int dimensions = 20;
-	static int islandCount = 30;
+	static int islandCount = 10;
 	Random rand = new Random();
 	Point shipLocation;
 	Point treasureLocation;
-	LinkedList<Enemy> enemyShips = new LinkedList<Enemy>();
+	List<Pirate> pirateShips = new ArrayList<Pirate>();
 	List<Monster> monsters = new ArrayList<Monster>();
 	private static OceanMap Grid;
 	

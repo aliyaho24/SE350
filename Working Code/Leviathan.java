@@ -1,4 +1,3 @@
-package code;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +7,7 @@ import javafx.scene.shape.Circle;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
-//Composite Class
+//Composite: 
 
 public class Leviathan implements Monster, Runnable {
 	/*
@@ -57,7 +56,7 @@ public class Leviathan implements Monster, Runnable {
 		circle.setFill(Color.RED);
 		setPositionX(x);
 		setPositionY(y);
-//		map.monsters.add(this);
+		map.monsters.add(this);
 
 	}	
 	
@@ -123,7 +122,7 @@ public class Leviathan implements Monster, Runnable {
 	@Override
 	public void setX(int dx) {
 		this.x = dx;
-		setPositionX(x);
+		setPositionY(x);
 	}
 
 	@Override
